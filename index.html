@@ -265,3 +265,131 @@
 </body>
 </html>
 
+
+//INOM JS Integration
+<div class="container">
+    <h1>Lead Collection Form</h1>
+    <p class="subtitle">Fill in your details to get started with INOM CRM</p>
+
+    <form id="leadForm">
+        <div class="form-group">
+            <label for="name">Full Name <span class="required">*</span></label>
+            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number <span class="required">*</span></label>
+            <input type="tel" id="phone" name="phone" required placeholder="+8801XXXXXXXXX">
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" name="notes" placeholder="Any additional information you'd like to share..."></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">Submit Lead</button>
+    </form>
+
+    <div id="message" class="message"></div>
+</div>
+
+//INOM Lead Form HTML
+<script type="module">
+    const form = document.getElementById('leadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const messageDiv = document.getElementById('message');
+
+    // Configuration
+    const config = {
+        webhookUrl: 'https://qt8tp18t67.execute-api.ap-southeast-2.amazonaws.com/leads/api/webhooks/website',
+        signingSecret: 'inom_lsk_WcAJzUHod1I4c0/oUKe7+Z7kJfS1OSFCFA0BjIdCi0c=',
+        siteKey: 'inom_lak_9a18c5fd8ddc4ceea989d788d1d9bab7'
+    };
+
+    // Function to generate HMAC signature (using SubtleCrypto API)
+    async function generateSignature(timestamp, body) {
+        const message = `${timestamp}.${body}`;
+        const encoder = new TextEncoder();
+        const keyData = encoder.encode(config.signingSecret);
+        const messageData = encoder.encode(message);
+
+        const cryptoKey = await crypto.subtle.importKey(
+            'raw',
+            keyData,
+            { name: 'HMAC', hash: 'SHA-256' },
+            false,
+            ['sign']
+        );
+
+        const signature = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
+
+        // Convert to hex string
+        return Array.from(new Uint8Array(signature))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+    }
+
+    function showMessage(text, type) {
+        messageDiv.textContent = text;
+        messageDiv.className = `message ${type} show`;
+        setTimeout(() => {
+            messageDiv.className = 'message';
+        }, 5000);
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Disable submit button
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        try {
+            // Collect form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                notes: document.getElementById('notes').value || ''
+            };
+
+            // Generate timestamp and signature
+            const timestamp = new Date().toISOString();
+            const body = JSON.stringify(formData);
+            const signature = await generateSignature(timestamp, body);
+
+            // Send request
+            const response = await fetch(config.webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Timestamp': timestamp,
+                    'X-Signature': signature,
+                    'X-Site-Key': config.siteKey
+                },
+                body: body
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showMessage('Lead submitted successfully! Thank you for your interest.', 'success');
+                form.reset();
+            } else {
+                showMessage(`Error: ${result.message || 'Failed to submit lead'}`, 'error');
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            showMessage('An error occurred. Please try again later.', 'error');
+        } finally {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Lead';
+        }
+    });
+</script>
