@@ -267,38 +267,6 @@
 
 
 //INOM JS Integration
-<div class="container">
-    <h1>Lead Collection Form</h1>
-    <p class="subtitle">Fill in your details to get started with INOM CRM</p>
-
-    <form id="leadForm">
-        <div class="form-group">
-            <label for="name">Full Name <span class="required">*</span></label>
-            <input type="text" id="name" name="name" required placeholder="Enter your full name">
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email Address <span class="required">*</span></label>
-            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-        </div>
-
-        <div class="form-group">
-            <label for="phone">Phone Number <span class="required">*</span></label>
-            <input type="tel" id="phone" name="phone" required placeholder="+8801XXXXXXXXX">
-        </div>
-
-        <div class="form-group">
-            <label for="notes">Additional Notes</label>
-            <textarea id="notes" name="notes" placeholder="Any additional information you'd like to share..."></textarea>
-        </div>
-
-        <button type="submit" id="submitBtn">Submit Lead</button>
-    </form>
-
-    <div id="message" class="message"></div>
-</div>
-
-//INOM Lead Form HTML
 <script type="module">
     const form = document.getElementById('leadForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -307,8 +275,8 @@
     // Configuration
     const config = {
         webhookUrl: 'https://qt8tp18t67.execute-api.ap-southeast-2.amazonaws.com/leads/api/webhooks/website',
-        signingSecret: 'inom_lsk_WcAJzUHod1I4c0/oUKe7+Z7kJfS1OSFCFA0BjIdCi0c=',
-        siteKey: 'inom_lak_9a18c5fd8ddc4ceea989d788d1d9bab7'
+        signingSecret: 'inom_lsk_ZkMztWwl6lRC804PN+hizObVK9dmb822fQgnOssK0MA=',
+        siteKey: 'inom_lak_0b5d76e0f9fc4dae8d624e416236eab2'
     };
 
     // Function to generate HMAC signature (using SubtleCrypto API)
@@ -393,3 +361,35 @@
         }
     });
 </script>
+
+//INOM Lead Form HTML
+<div class="container">
+    <h1>Lead Collection Form</h1>
+    <p class="subtitle">Fill in your details to get started with INOM CRM</p>
+
+    <form id="leadForm">
+        <div class="form-group">
+            <label for="name">Full Name <span class="required">*</span></label>
+            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number <span class="required">*</span></label>
+            <input type="tel" id="phone" name="phone" required placeholder="+8801XXXXXXXXX">
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" name="notes" placeholder="Any additional information you'd like to share..."></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">Submit Lead</button>
+    </form>
+
+    <div id="message" class="message"></div>
+</div>
