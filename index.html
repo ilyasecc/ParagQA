@@ -1,10 +1,447 @@
-...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern One Page Website</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    overflow-x:hidden;
+}
+
+.container{
+    width:100%;
+}
+
+.subtitle{
+    color:#cbd5e1;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:500;
+}
+
+.required{
+    color:#ef4444;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.05);
+    color:white;
+    outline:none;
+}
+
+.form-group textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+#submitBtn{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    color:white;
+    background:linear-gradient(90deg,#3b82f6,#8b5cf6);
+    transition:.3s;
+}
+
+#submitBtn:hover{
+    transform:translateY(-3px);
+}
+
+.message{
+    margin-top:20px;
+}
+    
+/* Animated Background */
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.circle{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:.4;
+    animation:float 10s infinite ease-in-out;
+}
+
+.circle1{
+    width:350px;
+    height:350px;
+    background:#3b82f6;
+    top:10%;
+    left:5%;
+}
+
+.circle2{
+    width:400px;
+    height:400px;
+    background:#8b5cf6;
+    right:10%;
+    top:20%;
+    animation-delay:2s;
+}
+
+.circle3{
+    width:300px;
+    height:300px;
+    background:#06b6d4;
+    bottom:10%;
+    left:35%;
+    animation-delay:4s;
+}
+
+@keyframes float{
+    50%{
+        transform:translateY(-40px) translateX(30px);
+    }
+}
+
+/* Navbar */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(20px);
+    background:rgba(255,255,255,.05);
+    z-index:1000;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+}
+
+nav ul{
+    display:flex;
+    gap:30px;
+    list-style:none;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#60a5fa;
+}
+
+/* Hero */
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 20px;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.hero h1{
+    font-size:4rem;
+    margin-bottom:20px;
+    line-height:1.1;
+}
+
+.hero span{
+    background:linear-gradient(90deg,#60a5fa,#8b5cf6);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    font-size:1.2rem;
+    color:#cbd5e1;
+    margin-bottom:35px;
+}
+
+.btn{
+    display:inline-block;
+    padding:16px 35px;
+    background:linear-gradient(90deg,#3b82f6,#8b5cf6);
+    color:white;
+    border-radius:50px;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-5px) scale(1.05);
+    box-shadow:0 20px 40px rgba(59,130,246,.3);
+}
+
+/* Features */
+.features{
+    padding:100px 8%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.section-title h2{
+    font-size:2.5rem;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(20px);
+    padding:30px;
+    border-radius:24px;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    background:rgba(255,255,255,.12);
+}
+
+.card h3{
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#cbd5e1;
+}
+
+/* CTA */
+.cta{
+    padding:120px 8%;
+    text-align:center;
+}
+
+.cta-box{
+    background:rgba(255,255,255,.08);
+    padding:60px;
+    border-radius:30px;
+    backdrop-filter:blur(20px);
+}
+
+.cta h2{
+    font-size:2.5rem;
+    margin-bottom:15px;
+}
+
+.cta p{
+    color:#cbd5e1;
+    margin-bottom:30px;
+}
+
+/* Footer */
+footer{
+    text-align:center;
+    padding:30px;
+    color:#94a3b8;
+}
+
+.fade{
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s;
+}
+
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:2.8rem;
+}
+
+nav ul{
+    display:none;
+}
+
+}
+</style>
+</head>
+<body>
+
+<div class="bg">
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <div class="circle circle3"></div>
+</div>
+
+<nav>
+    <div class="logo">NEXSTONE</div>
+
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content fade">
+        <h1>Build Your <span>Next Digital Experience</span></h1>
+
+        <p>
+            Modern websites, SaaS products and digital solutions
+            designed to help your business grow faster.
+        </p>
+
+        <a href="#contact" class="btn">
+            Get Started
+        </a>
+    </div>
+</section>
+
+<section class="features" id="lead-form">
+
+    <div class="section-title fade">
+        <h2>Get Started With INOM CRM</h2>
+        <p style="margin-top:10px;color:#cbd5e1;">
+            Fill in your details and our team will get in touch with you.
+        </p>
+    </div>
+
+    <div class="card fade" style="max-width:700px;margin:auto;">
+
+        <div class="container">
+            <h1>Lead Collection Form</h1>
+            <p class="subtitle">Fill in your details to get started with INOM CRM</p>
+
+            <form id="leadForm">
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+8801XXXXXXXXX">
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Additional Notes</label>
+                    <textarea id="notes" name="notes" placeholder="Any additional information you'd like to share..."></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn">Submit Lead</button>
+            </form>
+
+            <div id="message" class="message"></div>
+        </div>
+
+    </div>
+
+</section>
+    
+<section class="features" id="features">
+
+    <div class="section-title fade">
+        <h2>What We Do</h2>
+    </div>
+
+    <div class="cards">
+
+        <div class="card fade">
+            <h3>UI/UX Design</h3>
+            <p>Create intuitive user experiences with modern interfaces.</p>
+        </div>
+
+        <div class="card fade">
+            <h3>Web Development</h3>
+            <p>Fast, responsive and scalable websites for every business.</p>
+        </div>
+
+        <div class="card fade">
+            <h3>SaaS Products</h3>
+            <p>Design and build complete SaaS platforms from idea to launch.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="cta" id="contact">
+
+    <div class="cta-box fade">
+
+        <h2>Ready to Start?</h2>
+
+        <p>
+            Let's build something amazing together.
+        </p>
+
+        <a href="#" class="btn">
+            Contact Us
+        </a>
+
+    </div>
+
+</section>
+
 <footer>
     © 2026 Your Company. All Rights Reserved.
 </footer>
 
 <script>
-// Fade animation script
+
 const observer = new IntersectionObserver(entries => {
 
 entries.forEach(entry => {
@@ -20,9 +457,10 @@ entry.target.classList.add('show');
 document.querySelectorAll('.fade').forEach(el=>{
 observer.observe(el);
 });
+
 </script>
 
-<!-- Lead Form Integration Script -->
+
 <script type="module">
     const form = document.getElementById('leadForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -35,6 +473,7 @@ observer.observe(el);
         siteKey: 'inom_lak_8b9874e282c8463c97095ecaa4366bb5'
     };
 
+    // Function to generate HMAC signature (using SubtleCrypto API)
     async function generateSignature(timestamp, body) {
         const message = `${timestamp}.${body}`;
         const encoder = new TextEncoder();
@@ -51,6 +490,7 @@ observer.observe(el);
 
         const signature = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
 
+        // Convert to hex string
         return Array.from(new Uint8Array(signature))
             .map(b => b.toString(16).padStart(2, '0'))
             .join('');
@@ -59,7 +499,6 @@ observer.observe(el);
     function showMessage(text, type) {
         messageDiv.textContent = text;
         messageDiv.className = `message ${type} show`;
-
         setTimeout(() => {
             messageDiv.className = 'message';
         }, 5000);
@@ -68,11 +507,12 @@ observer.observe(el);
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        // Disable submit button
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting...';
 
         try {
-
+            // Collect form data
             const formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
@@ -80,10 +520,12 @@ observer.observe(el);
                 notes: document.getElementById('notes').value || ''
             };
 
+            // Generate timestamp and signature
             const timestamp = new Date().toISOString();
             const body = JSON.stringify(formData);
             const signature = await generateSignature(timestamp, body);
 
+            // Send request
             const response = await fetch(config.webhookUrl, {
                 method: 'POST',
                 headers: {
@@ -92,31 +534,22 @@ observer.observe(el);
                     'X-Signature': signature,
                     'X-Site-Key': config.siteKey
                 },
-                body
+                body: body
             });
 
             const result = await response.json();
 
             if (response.ok) {
-                showMessage(
-                    'Lead submitted successfully! Thank you for your interest.',
-                    'success'
-                );
+                showMessage('Lead submitted successfully! Thank you for your interest.', 'success');
                 form.reset();
             } else {
-                showMessage(
-                    `Error: ${result.message || 'Failed to submit lead'}`,
-                    'error'
-                );
+                showMessage(`Error: ${result.message || 'Failed to submit lead'}`, 'error');
             }
-
         } catch (error) {
-            console.error(error);
-            showMessage(
-                'An error occurred. Please try again later.',
-                'error'
-            );
+            console.error('Submission error:', error);
+            showMessage('An error occurred. Please try again later.', 'error');
         } finally {
+            // Re-enable submit button
             submitBtn.disabled = false;
             submitBtn.textContent = 'Submit Lead';
         }
