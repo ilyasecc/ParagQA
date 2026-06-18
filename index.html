@@ -555,5 +555,23 @@ observer.observe(el);
     });
 </script>
 
+
+
+<!-- INOM Chat Widget - Add this before closing </body> tag -->
+  <script id="inom-chat-widget" assistant-id="019eafa9-fe54-7e6a-b896-50fbf8f904a5">
+    (function() {
+      var scriptTag = document.getElementById('inom-chat-widget');
+      var assistantId = scriptTag.getAttribute('assistant-id');
+      window.InomChatWidget = {
+        assistantId: assistantId
+      };
+      var s = document.createElement('script');
+      s.src = 'https://dev-app.inom.ai/widgets/website-ai-assistant/widget.min.js';
+      s.async = true;
+      s.defer = true;
+      document.body.appendChild(s);
+    })();
+  </script>
+  <!-- End INOM Chat Widget -->
 </body>
 </html>
